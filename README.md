@@ -9,4 +9,6 @@ Bis zum Ende des Modules habe ich noch etwa 6 Wochen Zeit. Ich sollte dahher gen
 ## NR 1 Eine statische Webseite erstellen und mit PaaS in der Cloud publizieren.
 
 ### Erstellen der Statischen Website.
-Als statische Website verwende ich meine Website aus dem letzen Modul M290. Diese braucht einen Webserver mit `PHP` und eine SQL datenbank.
+Als statische Website verwende ich meine Website aus dem letzen Modul M290. Diese braucht einen Webserver mit `PHP` und eine SQL datenbank. Ich verwende zum Deployen den [Webhostingservice](https://www.hetzner.com/webhosting) von `Hetzner` da ich in dem Basicpaket für `1.90` nichtnur einen Webserver mit PHP zur Verfügung habe sondern dazu auch gleich noch eine MySQL Datenbank, eine Domain bei der ich frei über die DNS EInträge verfügen kann, und einen E-Mail Server.
+
+## NR 2 Mounten eines 
