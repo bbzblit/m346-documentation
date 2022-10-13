@@ -16,21 +16,26 @@ Ich benutze für das einbinden einen bereits exisitierenden Server, auf dem ich 
 
 1. Erstellen des Mountpoints <br/>
 Als erstes habe ich einen neuen Folder erstellt, an dessen Stelle ich den Networkdrive mounten möchte
+
 ```bash
 sudo mkdir /media/M346
 ```
+
 Damit ich anschlissend auch mit dem Folder interagieren kann musste ich mir noch die nötigen Berechtigungen geben. Das geht ganz einfach mit dem `chmod` command.
+
 ```bash
 sudo chmod 777 /media/M346/
 ```
 
 2. Umstellen von Passwort Authentifikation zu public key Authentifikation <br/>
 Im nächsten Schritt könnte ich theoretisch direckt das Filesystem mounten. Allerdings ist der neu erstellte User defaultmässig über ein Passwort geschützt. Dass möchte ich ändern und die Authentifikation über einen Public Key durchführen. Das ist sicherer gegen Physchingattaken und ich muss mir das Passwort nicht merken. Auf dem server gibt es bereits ein Skript namens `install-ssh-key` mit dem man automatisch SSH Keys installieren kann. Dadurch kann ich über OpenSSH das Ganze ganz einfach installieren. 
+
 ```bash
 cat ~/.ssh/id_ecdsa.pub | ssh <User>@<ServerIP> install-ssh-key
 ```
-3. Mounten des Filesystems
+3. Mounten des Filesystems <br/>
 Für das mounten des filesystems benutze ich `sshfs`. Wie der name schon sagt basiert es auf dem Secure Shell Protocoll und ist dadurch nicht die Schnellste Möglichkeit allerdings ist es relativ sicher und dahher gut geeignet um Daten über das Internet zu transportieren.
+
 ```bash
 sudo sshfs <username>@<server>:<server-directory> /media/M346
 ```
