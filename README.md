@@ -63,11 +63,11 @@ Da ich mich auch bei diesem Mal via SSH Anmelde muss ich sicherstellen dass ich 
 ```bash
 <user> ALL=(ALL) NOPASSWD: ALL
 ```
-Nachdem ich getestet habe, dass ich micht auch wirklich mit dem User anmelden kann und ich auch alle nötigen Rechte habe muss ich noch sichergehen, dass man sich nichtmehr mit dem `root` User anmelden kann. Dazu editiere ich mit vime das file `/etc/ssh/ssh_config`. In ihm sind alle Konfigurationen für den SSH Client drinnen. Ich füge nun eine Zeile hinzu, welche root login via `ssh` verbietet.
+Nachdem ich getestet habe, dass ich micht auch wirklich mit dem User anmelden kann und ich auch alle nötigen Rechte habe muss ich noch sichergehen, dass man sich nichtmehr mit dem `root` User anmelden kann. Dazu editiere ich mit vime das file `/etc/ssh/sshd_config`. In ihm sind alle Konfigurationen für den SSH Client drinnen. Ich füge nun eine Zeile hinzu, welche root login via `ssh` verbietet.
 ```bash
 PermitRootLogin no
 ```
-Nun muss ich nurnoch den `ssh` daemon restartet, dammit die changes aktiv werden.
+Nun muss ich nur noch den `ssh` daemon restartet, dammit die changes aktiv werden.
 ```bash
 sudo systemctl restart sshd
 ```
