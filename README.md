@@ -49,7 +49,7 @@ Im ersten Schritt verbinde ich mit der VPS via SSH. Als authentification benutze
 ```bash
 ssh root@<ip>
 ```
-2. Erstellen eines neuen Users
+2. Erstellen eines neuen Users <br/>
 Da es ein Sicherheitsrisiko ist, wenn man sich mit dem Defaultuser anmelden kan erstelle ich ein neuen User und gebe ihm Sudorechte. Vom jetztigen Moment an werde ich mich nurnoch mit dem neuen User auf dem Server anmelden.
 
 ```bash
@@ -71,3 +71,13 @@ Nun muss ich nur noch den `ssh` daemon restartet, dammit die changes aktiv werde
 ```bash
 sudo systemctl restart sshd
 ```
+3. Update Packagemanager <br/>
+Linux benutzt ein Packagemanager. Im falle von Debian ist das `apt` (Advanced Packaging Tool). Der Packagemanager besitzt eine lokale Liste von allen Packages, welche auf den Server die er kennt verfügbar sind. Diese Liste ändert sich von Zeit zu Zeit. Um nun immer die aktuellste Liste zu haben kann man den Befehl `sudo apt-get update` ausführen. Dadurch wird die aktuellste Liste von dem Server gesynct. 
+4. Installieren von nginx
+Als Webserver benutzte ich `nginx`. Dieser kann man ganz einfach mithilfe des Packagemanagers installieren.
+
+```bash
+sudo apt-get install nginx
+```
+Nachdem die Instatlation durchgelaufen ist sollte einen eine default Page von NGINX begrüssen wenn man die Serverip aufruft. 
+5. Hinzufügen einer Domain
