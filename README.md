@@ -73,15 +73,18 @@ sudo systemctl restart sshd
 ```
 3. Update Packagemanager <br/>
 Linux benutzt ein Packagemanager. Im falle von Debian ist das `apt` (Advanced Packaging Tool). Der Packagemanager besitzt eine lokale Liste von allen Packages, welche auf den Server die er kennt verfügbar sind. Diese Liste ändert sich von Zeit zu Zeit. Um nun immer die aktuellste Liste zu haben kann man den Befehl `sudo apt-get update` ausführen. Dadurch wird die aktuellste Liste von dem Server gesynct. 
-4. Installieren von nginx
+
+4. Installieren vom Webserver <br/>
 Als Webserver benutzte ich `nginx`. Dieser kann man ganz einfach mithilfe des Packagemanagers installieren.
 
 ```bash
 sudo apt-get install nginx
 ```
 Nachdem die Instatlation durchgelaufen ist sollte einen eine default Page von NGINX begrüssen wenn man die Serverip aufruft. 
+
 5. Hinzufügen einer Domain <br/>
 In meinem nächsten Schritt habe ich eine Subdomain eingerichtet, bei welchem die Domain auf die Server Ip addrese Zeigt. Meine Domains verwalte ich über Cloudflare, dadurch kann ich auch gleich den Traffic durch Cloudflare proxien lasse um DDoS Angriffe abzuweheren. Ich habe also einen `A` Eintrag hinzugefügt, welcher auf die IPv4 zeit und einen `AAAA` der auf die IPv6 zeugt.
+
 6. Configurieren der Domain <br/>
 Nachdem ich die Domain `nr3.bbzbl-it.dev` so konfiguriert habe, dass sie auf den Server zeigt habe ich mich daran gemacht, diese auf dem Server zu konfigurieren. Dadurch habe ich zuerst eine neue Konfigurationsdatei für NGRX hinzugefügt (`/etc/nginx/sites-available/nr3.bbzbl-it.conf`). In dem File füge ich dann die Configuration für den Server hinzu.
 ```
@@ -93,3 +96,25 @@ server {
 }
 ```
 Als nächstes muss ich noch die defaultconfig entfernen die im file `/var/www/html/default`, da es sonst zu conflikten mit meiner configruation kommen könnte. Nach einem restart `sudo systemctl restart nginx` sollte nun die neuen Configruationen aktive sein. 
+
+7. Enfügen der Website <br/>
+Im nächsten Schritt muss ich meine Website die aktuell auf [GitHub](https://github.com/bbzblit/modul-293-project) ist irgendwie auf den Webserver bringen. Glücklicherweise kann man mit `apt` ganz einfach die git commandline Tools installieren um nachher das Projekt zu clonen
+```bash
+sudo apt-get install git
+git clone https://github.com/bbzblit/modul-293-project.git
+sudo mv modul-293-project/src/ /var/www/html/nr3.bbzbl-it.dev/
+```
+Wenn man nun den befehl `curl localhost` ausführt sollte die Website nun erreichbar sein. Allerdings ist sie noch nicht von CloudFlare aus erreichbar. 
+
+8. Hinzufügen eines SSL Zertifikates  <br/>
+Im nächsten Schritt muss man noch ein SSL Zertifikat konfigurieren, dass die Website auch über https her erreichbar ist. Natürlich sollte das kein Selbstsigniertes Zertifikat sein. Desshabl werde ich Lets Encrypt verwenden, um kostenlos ein Signiertes Zertifikat zu erstellen. Dafür muss ich zuerst die Nötigen packages installieren. 
+
+```
+sudo apt-get install certbot -y
+sudo apt-get install python3-certbot-nginx -y
+```
+Danach generiere ich mir mit Certbot ein SSL Zertifikat. Der Vorteil davon ist, dass es auch gleich die nötigen Configurationen für den Ngrix Server einfügt. Wichtig ist, dass die Domaineinträge dafür schon exisiteren, da sonst nicht validiert werden kann dass man auch der Eigentümmer der Domain ist.
+```
+sudo certbot --nginx -d nr3.bbzbl-it.dev
+```
+Nach dem erfollgreichen erstellen sollte nun die Website auch über CloudFlare erreichbar sein.
