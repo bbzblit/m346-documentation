@@ -118,3 +118,15 @@ Danach generiere ich mir mit Certbot ein SSL Zertifikat. Der Vorteil davon ist, 
 sudo certbot --nginx -d nr3.bbzbl-it.dev
 ```
 Nach dem erfollgreichen erstellen sollte nun die Website auch über CloudFlare erreichbar sein.
+
+9. Einrichten der Firewall <br/>
+Damit meine Website von ausen erreichbar ist muss nur auf einen Port `443` zugegriffen werden. In der aktuellen Konfiguration ohne Firewall sind allerdings alle Ports geöffnet. Das kann zum Problem werden, wenn eine Applikation im Hinzergrund läuft von der wir nichts wissen. Desshalb sollte man nur Ports öffnen welche man zwingend braucht. Als firewall verwende ich hier `ufw` Uncomplicated Firewall da diese sehr leicht zu konfigurieren ist und für eine Website ohne Problem ausreichend ist.
+```bash
+sudo apt-get install ufw
+```
+Alls erstes erlauben wir `ssh` und `https`. Es ist sehr wichtig zu beachten dass man ssh erlaubt befor die firewall aktiviert wird, da defaultmässig **allen** eingehender Traffik blockiert wird.
+```bash
+sudo ufw allow ssh
+sudo ufw allow https
+sudo ufw enable
+```
