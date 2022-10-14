@@ -130,3 +130,4 @@ sudo ufw allow ssh
 sudo ufw allow https
 sudo ufw enable
 ```
+Dadurch sollte nun die Website unter [https://nr3.bbzbl-it.dev/](https://nr3.bbzbl-it.dev/) erreichbar sein.
