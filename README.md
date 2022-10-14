@@ -80,4 +80,16 @@ Als Webserver benutzte ich `nginx`. Dieser kann man ganz einfach mithilfe des Pa
 sudo apt-get install nginx
 ```
 Nachdem die Instatlation durchgelaufen ist sollte einen eine default Page von NGINX begrüssen wenn man die Serverip aufruft. 
-5. Hinzufügen einer Domain
+5. Hinzufügen einer Domain <br/>
+In meinem nächsten Schritt habe ich eine Subdomain eingerichtet, bei welchem die Domain auf die Server Ip addrese Zeigt. Meine Domains verwalte ich über Cloudflare, dadurch kann ich auch gleich den Traffic durch Cloudflare proxien lasse um DDoS Angriffe abzuweheren. Ich habe also einen `A` Eintrag hinzugefügt, welcher auf die IPv4 zeit und einen `AAAA` der auf die IPv6 zeugt.
+6. Configurieren der Domain <br/>
+Nachdem ich die Domain `nr3.bbzbl-it.dev` so konfiguriert habe, dass sie auf den Server zeigt habe ich mich daran gemacht, diese auf dem Server zu konfigurieren. Dadurch habe ich zuerst eine neue Konfigurationsdatei für NGRX hinzugefügt (`/etc/nginx/sites-available/nr3.bbzbl-it.conf`). In dem File füge ich dann die Configuration für den Server hinzu.
+```
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+    root /var/www/html/nr3.bbzbl-it.dev;
+    server_name nr3.bbzbl-it.dev;
+}
+```
+Als nächstes muss ich noch die defaultconfig entfernen die im file `/var/www/html/default`, da es sonst zu conflikten mit meiner configruation kommen könnte. Nach einem restart `sudo systemctl restart nginx` sollte nun die neuen Configruationen aktive sein. 
