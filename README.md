@@ -158,3 +158,9 @@ java -Xmx1024M -Xms1024M -jar server.jar nogui
 ```
 Nachdem der Server das erste mal gestartet ist bricht er schnell nach dem Startvorgang ab. Das liegt daran, dass man die minecraft `Eula` (end user agreement) abkzetieren muss. Das kann man ganz einfach dadurch machen, dass man das file `eula.txt` editiert und `eula=false` auf `eula=true` setzt. Danach kann man den Server einfach erneut aufstarten. <br/>
 Nachdem der Server komplet aufgestartet ist kann man `tmux` wieder mit dem Shortcut `ctrl + b` und anschlissend `d` verlassen. Alle aktiven `tmux` sessions kann man nun mit dem command `tmux ls` auflisten und falls man wieder in eine session zurückkehren möchte kann man das mit dem command `tmux attach -t <session id>` machen.
+
+7. Einrichten einer Domain <br/>
+Nun da der Server nun läuft habe ich schnell noch eine Subdomain eingerichtet die auf den Server zeigt. Wenn man seine Domains bei Cloudflare verwaltet ist es wichtig, dass man Proxy durch Cloudflare ausschaltet. Das liegt daran, dass in der Freeversion diese Protokole/Ports nicht abgedekt werden.
+
+8. Einrichten der Firewall. <br/>
+Da ich diesen Server bei Hetzner eingerichtet habe ich automatisch auch Zungang zu einer kostenlosen externen Firewall und muss nicht `ufw` benutzen. FÜr den Minecraft Server muss ich TCP Traffik auf dem Port `22` für `ssh` und dem port `25565` für den Minecraft Server zulassen
