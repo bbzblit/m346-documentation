@@ -135,3 +135,26 @@ Dadurch sollte nun die Website unter [https://nr3.bbzbl-it.dev/](https://nr3.bbz
 ## NR ? Aufsetzen eines Minecraft Server
 Ich benutze für den Minecraft Server ein server mit `1` vCPU `2 GB` Ram und `20 GB` SSD Storage. Als  Betriebsystem verwende ich auch hier `Debian 11`. Die ersten 3 Schritte die ich auf dem Server ausgeführt haben sind exakt die gleichen wie bei `NR. `3` weshabl ich sie nicht nocheinmal dokumentiere.
 
+4. Installieren von Java <br/>
+Da Minecraft Server eine Java application ist musste ich zuerst Java installieren. Ich möchte am Ende die neuste Version von Minecraft installieren wesshalb ich die Java version `17` installieren muss.
+```bash
+sudo apt-get install openjdk-17-jdk
+```
+
+5. Herunterladen von Minecraft Server <br/>
+Im nächsten Schritt habe ich die executable für Minecraft Server heruntergelade. Das geht ganz einfach über `wget`
+```bash
+wget https://piston-data.mojang.com/v1/objects/f69c284232d7c7580bd89a5a4931c3581eae1378/server.jar
+```
+
+6. Ausführen vom Minecraft Server <br/>
+Wenn man über ssh auf einen Server zugreift ist das in etwa so wie wenn man auf einem Pc eine neue Konsole öffnet. Sobald die SSH Verbindung geschlossen wird wird auch automatisch die Konsole geschlossen. Das ergibt im Normalfall auch durchaus sinn. In diesem Fall allerdings möchte man, dass der Server weiterhin läuft auch wenn man die SSH Verbindung schlisst. Die Lösung für das Problem lautet `tmux`. Mit `tmux` kann man eine konsole in einer konsole erstellen die im Hintergrund läuft. Diese wird auch wenn die SSH Verbindung geschlossen wird nicht beendet. 
+```bash
+sudo apt-get install tmux
+```
+Eine neue `tmux` session kann man ganz einfach mit dem command `tmux` erstellen. Dass man sich in einer `tmux` session befindet sieht man daran, dass unten an der Konsole ein grüner Strich ist. Den server kann ich dann ganz einfach aufstarten. Die beiden Parameter `-Xmx` und `-Xms` definieren dabei die maximalen und die initiale heap size
+```bash
+java -Xmx1024M -Xms1024M -jar server.jar nogui
+```
+Nachdem der Server das erste mal gestartet ist bricht er schnell nach dem Startvorgang ab. Das liegt daran, dass man die minecraft `Eula` (end user agreement) abkzetieren muss. Das kann man ganz einfach dadurch machen, dass man das file `eula.txt` editiert und `eula=false` auf `eula=true` setzt. Danach kann man den Server einfach erneut aufstarten. <br/>
+Nachdem der Server komplet aufgestartet ist kann man `tmux` wieder mit dem Shortcut `ctrl + b` und anschlissend `d` verlassen. Alle aktiven `tmux` sessions kann man nun mit dem command `tmux ls` auflisten und falls man wieder in eine session zurückkehren möchte kann man das mit dem command `tmux attach -t <session id>` machen.
