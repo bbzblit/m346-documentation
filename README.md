@@ -131,3 +131,7 @@ sudo ufw allow https
 sudo ufw enable
 ```
 Dadurch sollte nun die Website unter [https://nr3.bbzbl-it.dev/](https://nr3.bbzbl-it.dev/) erreichbar sein.
+
+## NR ? Aufsetzen eines Minecraft Server
+Ich benutze für den Minecraft Server ein server mit `1` vCPU `2 GB` Ram und `20 GB` SSD Storage. Als  Betriebsystem verwende ich auch hier `Debian 11`. Die ersten 3 Schritte die ich auf dem Server ausgeführt haben sind exakt die gleichen wie bei `NR. `3` weshabl ich sie nicht nocheinmal dokumentiere.
+
