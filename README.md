@@ -132,6 +132,15 @@ sudo ufw enable
 ```
 Dadurch sollte nun die Website unter [https://nr3.bbzbl-it.dev/](https://nr3.bbzbl-it.dev/) erreichbar sein.
 
+
+
+## Nr 4 Factorial als FaaS in Azure
+1. Erstellen einer neuen Funktions App <br/>
+Alls erstes musste ich bei Azure eine neue Function-App erstellen. Das ging in meinem Fall ganz einfach über die home page. Alls Programmiersprache habe ich Python ausgewählt, da man dabei fast keine Einschränkungen hat beim Rechnen mit Zahlen (keine Typisierung oder limits wie bei JS).  
+
+
+
+<!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
 ## NR ? Aufsetzen eines Minecraft Server
 Ich benutze für den Minecraft Server ein server mit `1` vCPU `2 GB` Ram und `20 GB` SSD Storage. Als  Betriebsystem verwende ich auch hier `Debian 11`. Die ersten 3 Schritte die ich auf dem Server ausgeführt haben sind exakt die gleichen wie bei `NR. `3` weshabl ich sie nicht nocheinmal dokumentiere.
 
