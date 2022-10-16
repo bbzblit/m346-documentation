@@ -161,22 +161,36 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
         else:
             number = req_body.get('number')
     if not number:
-        return func.HttpResponse("You have to provide a number", status_code=422)
-    logging.error("aaaa")
+        return func.HttpResponse("You have to provide a number", status_code=400)
     if not number.isnumeric():
         return func.HttpResponse("The number must be an integer", status_code=422)
+    if len(number) > 3:
+        return func.HttpResponse(f"The number must be positive and less than 200 your number {number} (len error) ",
+        status_code=422)
     number = int(number)
-    if number < 0 and number > 200:
+    if number < 0 or number > 200:
         return func.HttpResponse(f"The number must be positive and less than 200 your number {number} ",
         status_code=422)
 
-    factor = 1
-    while number > 1:
-        factor *= number
-        number -= 1
-    return factor
+    return func.HttpResponse(f"The factorial of {number}! is {math.factorial(number)}")
 ```
 Mir ist durchaus bewusst, dass man das ganze auch gut als recursive Funktion schreiben. Allerings bin ich nicht so ein Freund von recursiven Funktionen und ausserdem ist da noch [dieser Grund](https://www.electropages.com/blog/2021/01/how-start-received-75000-bill-2-hours-google-cloud-services)
+
+3. Hinzufügen einer Domain <br/>
+Im letzen Schritt habe ich noch eine eigene Domain hinzugefügt. Wenn man auf die Funktions-App geht gibt es einen eigenen abschnitt `Benutzerdefinierte Domänen` über den man eine eigene Domain hinzufügen kann. Nach dem Hinzufügen der Domain musste ich nur noch einen `CNAME` eintrag auf die bestehende Azure subdomain machen.
+```
+faas.bbzbl-it.dev -> factorial-m346.azurewebsites.net
+```
+Wieder lasse ich den gesamten Traffik über CloudFlare laufen. Der Traffik zwischen meinem PC und Cloudflare ist defaultmässig über ein SSL Zertifikat geschützt. er Traffik zwischen dem Cloudflare Server und dem Azure Datenzenter ist allerdings nochnicht geschützt, da Azure keine Funktion hat um ein SSL Zertifikat zu geneireren (nichtmal ein unsigniertes). Das heisst, dass ich ein eigenes SSL Zertifikat beschaffen muss und es hochladen. <br/>
+Glücklicherweise kann man bei Cloudflare kostenlos Signierte Zertifikate generieren, welche man dann auf dem Server einfügen kann. Nachdem generien musste ich das Zertifikat und der Private Key für das Zertifikat nur noch in eine `.pfx` Datei verwandeln und schon konnte ich es auf Azure hochladen. Glücklicherweise kann man auch das mit `openssl` relativ leicht machen  
+```bash
+openssl pkcs12 -export -out ./azure_cert.pfx -inkey ./cloudflare_cert.pem -in ./cloudflare_cert.crf -legacy
+```
+Nun sollte die Funktion fertig sein. Sie hat die beiden URL-Paramter `code` und `number`. Mit `code` muss der access code mitgegeben werden und mit `number` die Zahl von der man die Fakultäte ausrechnen möchte.
+```bash
+https://faas.bbzbl-it.dev/api/fakultaet?code=<Access-Code>&number=123
+```
+
 
 
 
