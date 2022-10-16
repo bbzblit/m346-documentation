@@ -161,13 +161,14 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
         else:
             number = req_body.get('number')
     if not number:
-        return func.HttpResponse("You have to provide a number", status_code=400)
+        return func.HttpResponse("You have to provide a number", status_code=422)
     logging.error("aaaa")
     if not number.isnumeric():
         return func.HttpResponse("The number must be an integer", status_code=422)
     number = int(number)
     if number < 0 and number > 200:
-        return func.HttpResponse(f"The number must be positive and less than 200 your number {number} ", status_code=422)
+        return func.HttpResponse(f"The number must be positive and less than 200 your number {number} ",
+        status_code=422)
 
     factor = 1
     while number > 1:
