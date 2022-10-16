@@ -138,9 +138,52 @@ Dadurch sollte nun die Website unter [https://nr3.bbzbl-it.dev/](https://nr3.bbz
 1. Erstellen einer neuen Funktions App <br/>
 Alls erstes musste ich bei Azure eine neue Function-App erstellen. Das ging in meinem Fall ganz einfach über die home page. Alls Programmiersprache habe ich Python ausgewählt, da man dabei fast keine Einschränkungen hat beim Rechnen mit Zahlen (keine Typisierung oder limits wie bei JS).  
 
+2. Erstellen der Funktion <br/>
+Als nächstes habe ich zur Funktions app eine neue Funktion hinzugefügt. Als Trigger der Funktion habe ich `http request` ausgewählt. Alles andere habe ich auf den Defaultwerten gelassen. Danach habe ich ein Script geschrieben, dass die Fakultät von einer belibigen Nummer ausrechnet. Wie bereits gesagt, hat gibt es in Python keine Limets was Zahlen angehet. Aus diesem Grund validiere ich auch ob die Zahl kleiner oder gleich 200 ist. Das solte einfach verhinderen, dass die Funktion mit extrem grossen Zahlen aufgerufen wird, die möglicherweise zu lange dauern um ausgeführt zu werden und dadurch zu hohe Kosten verursachen. 
+
+```python
+import logging
+
+import math
+
+import azure.functions as func
+
+
+def main(req: func.HttpRequest) -> func.HttpResponse:
+    logging.info('Python HTTP trigger function processed a request.')
+
+    number = req.params.get('number')
+    if not number:
+        try:
+            req_body = req.get_json()
+        except ValueError:
+            pass
+        else:
+            number = req_body.get('number')
+    if not number:
+        return func.HttpResponse("You have to provide a number", status_code=400)
+    logging.error("aaaa")
+    if not number.isnumeric():
+        return func.HttpResponse("The number must be an integer", status_code=422)
+    number = int(number)
+    if number < 0 and number > 200:
+        return func.HttpResponse(f"The number must be positive and less than 200 your number {number} ", status_code=422)
+
+    factor = 1
+    while number > 1:
+        factor *= number
+        number -= 1
+    return factor
+```
+Mir ist durchaus bewusst, dass man das ganze auch gut als recursive Funktion schreiben. Allerings bin ich nicht so ein Freund von recursiven Funktionen und ausserdem ist da noch [dieser Grund](https://www.electropages.com/blog/2021/01/how-start-received-75000-bill-2-hours-google-cloud-services)
+
 
 
 <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
+<!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
+<!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
+<!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
+
 ## NR ? Aufsetzen eines Minecraft Server
 Ich benutze für den Minecraft Server ein server mit `1` vCPU `2 GB` Ram und `20 GB` SSD Storage. Als  Betriebsystem verwende ich auch hier `Debian 11`. Die ersten 3 Schritte die ich auf dem Server ausgeführt haben sind exakt die gleichen wie bei `NR. `3` weshabl ich sie nicht nocheinmal dokumentiere.
 
