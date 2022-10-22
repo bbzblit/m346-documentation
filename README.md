@@ -157,25 +157,23 @@ import azure.functions as func
 def main(req: func.HttpRequest) -> func.HttpResponse:
     logging.info('Python HTTP trigger function processed a request.')
 
-    number = req.params.get('number')
-    if not number:
+    number = req.params.get('number', "")
+    if number == "":
         try:
             req_body = req.get_json()
         except ValueError:
             pass
         else:
-            number = req_body.get('number')
-    if not number:
+            number = req_body.get('number', "")
+    if number == "":
         return func.HttpResponse("You have to provide a number", status_code=400)
     if not number.isnumeric():
         return func.HttpResponse("The number must be an integer", status_code=422)
     if len(number) > 3:
-        return func.HttpResponse(f"The number must be positive and less than 200 your number {number} (len error) ",
-        status_code=422)
+        return func.HttpResponse(f"The number must be positive and less than 200 your number {number} (len error) ", status_code=422)
     number = int(number)
     if number < 0 or number > 200:
-        return func.HttpResponse(f"The number must be positive and less than 200 your number {number} ",
-        status_code=422)
+        return func.HttpResponse(f"The number must be positive and less than 200 your number {number} ", status_code=422)
 
     return func.HttpResponse(f"The factorial of {number}! is {math.factorial(number)}")
 ```
@@ -206,6 +204,7 @@ Anfangs hat Azure mein `pfx` Zertifikat nicht erkannt. Ich dachte zuerst es läg
 
 
 
+## NR 5. Primefaktor Zerlegungs Funktion schreiben
 
 
 <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
