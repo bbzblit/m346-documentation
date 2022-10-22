@@ -137,9 +137,14 @@ Dadurch sollte nun die Website unter [https://nr3.bbzbl-it.dev/](https://nr3.bbz
 ## Nr 4 Factorial als FaaS in Azure
 1. Erstellen einer neuen Funktions App <br/>
 Alls erstes musste ich bei Azure eine neue Function-App erstellen. Das ging in meinem Fall ganz einfach über die home page. Alls Programmiersprache habe ich Python ausgewählt, da man dabei fast keine Einschränkungen hat beim Rechnen mit Zahlen (keine Typisierung oder limits wie bei JS).  
+![image](https://user-images.githubusercontent.com/99135388/197341160-b398b329-58ef-4abd-acef-dec02832ef7c.png)
+
 
 2. Erstellen der Funktion <br/>
-Als nächstes habe ich zur Funktions app eine neue Funktion hinzugefügt. Als Trigger der Funktion habe ich `http request` ausgewählt. Alles andere habe ich auf den Defaultwerten gelassen. Danach habe ich ein Script geschrieben, dass die Fakultät von einer belibigen Nummer ausrechnet. Wie bereits gesagt, hat gibt es in Python keine Limets was Zahlen angehet. Aus diesem Grund validiere ich auch ob die Zahl kleiner oder gleich 200 ist. Das solte einfach verhinderen, dass die Funktion mit extrem grossen Zahlen aufgerufen wird, die möglicherweise zu lange dauern um ausgeführt zu werden und dadurch zu hohe Kosten verursachen. 
+Als nächstes habe ich zur Funktions app eine neue Funktion hinzugefügt. Als Trigger der Funktion habe ich `http request` ausgewählt. Zudem hbe ich noch eingestellt, dass ich das ganze im Azure Portal entwicklen werde. Ich persönlich finde es angenehmen für einfache Funktionen diese direckt im Portal zu entwicklen. Im letzten Punkt (`Authorization level`) habe ich `function` ausgewählt. Dadurch muss man einen Code beim Aufrufen der URL mitsenden. Dadurch können nur berechtigte Personen auf die Funktion zugreifen. 
+![image](https://user-images.githubusercontent.com/99135388/197341196-0050ee5a-aeea-4469-a0b4-8da12aef5a31.png)
+
+Danach habe ich ein Script geschrieben, dass die Fakultät von einer belibigen Nummer ausrechnet. Wie bereits gesagt, hat gibt es in Python keine Limets was Zahlen angehet. Aus diesem Grund validiere ich auch ob die Zahl kleiner oder gleich 200 ist. Das solte einfach verhinderen, dass die Funktion mit extrem grossen Zahlen aufgerufen wird, die möglicherweise zu lange dauern um ausgeführt zu werden und dadurch zu hohe Kosten verursachen. 
 
 ```python
 import logging
@@ -176,19 +181,24 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
 ```
 Mir ist durchaus bewusst, dass man das ganze auch gut als recursive Funktion schreiben. Allerings bin ich nicht so ein Freund von recursiven Funktionen und ausserdem ist da noch [dieser Grund](https://www.electropages.com/blog/2021/01/how-start-received-75000-bill-2-hours-google-cloud-services)
 
-3. Hinzufügen einer Domain <br/>
-Im letzen Schritt habe ich noch eine eigene Domain hinzugefügt. Wenn man auf die Funktions-App geht gibt es einen eigenen abschnitt `Benutzerdefinierte Domänen` über den man eine eigene Domain hinzufügen kann. Nach dem Hinzufügen der Domain musste ich nur noch einen `CNAME` eintrag auf die bestehende Azure subdomain machen.
-```
-faas.bbzbl-it.dev -> factorial-m346.azurewebsites.net
-```
-Wieder lasse ich den gesamten Traffik über CloudFlare laufen. Der Traffik zwischen meinem PC und Cloudflare ist defaultmässig über ein SSL Zertifikat geschützt. er Traffik zwischen dem Cloudflare Server und dem Azure Datenzenter ist allerdings nochnicht geschützt, da Azure keine Funktion hat um ein SSL Zertifikat zu geneireren (nichtmal ein unsigniertes). Das heisst, dass ich ein eigenes SSL Zertifikat beschaffen muss und es hochladen. <br/>
-Glücklicherweise kann man bei Cloudflare kostenlos Signierte Zertifikate generieren, welche man dann auf dem Server einfügen kann. Nachdem generien musste ich das Zertifikat und der Private Key für das Zertifikat nur noch in eine `.pfx` Datei verwandeln und schon konnte ich es auf Azure hochladen. Glücklicherweise kann man auch das mit `openssl` relativ leicht machen  
-```bash
-openssl pkcs12 -export -out ./azure_cert.pfx -inkey ./cloudflare_cert.pem -in ./cloudflare_cert.crf -legacy
-```
 Nun sollte die Funktion fertig sein. Sie hat die beiden URL-Paramter `code` und `number`. Mit `code` muss der access code mitgegeben werden und mit `number` die Zahl von der man die Fakultäte ausrechnen möchte.
 ```bash
-https://faas.bbzbl-it.dev/api/fakultaet?code=<Access-Code>&number=123
+https://python-faas.bbzbl-it.dev/api/fakultaet?code=<Access-Code>&number=<Number>
+```
+## Nr 4 Part 2
+Die Funktion ist nun voll funktionsfähig. Allerdings finde ich es nicht sonderlich schön eine Subdomain von Azure zu verwenden. Viel lieber möchte ich meine eigene Domain hinzufügen. 
+<br/>
+1. Hinzufügen einer Domain bei Azure <br/>
+In Azure kann man bei einer Funktions App unter dem Tap `Benutzerdefinierte Domain` eine eigene Domain hinzufügen. Nach dem hinzufügen muss man einen sogenannten `CNAME` eintrag auf die bestehende Azure subdomain machen. Da ich auch in dieser Aufgabe wieder meinen gesammten Traffic über CloudFlare Proxien lassen werde, kann Azure nicht verfizieren, ob die Domain auch wirklich hinzugefügt worden ist. Um das zu verfizieren muss ich noch einen sogennanten `TXT` eintrag machen. Der Context vom `TXT` eintrag ist ein ein Prüfcode. 
+
+2. Hnzufügen eines Zertifikates <br/>
+Der Traffic von PC zu CloudFlare ist automatisch verschlüsselt. Allerdings braucht die Funktions App auch ein eigenes SSL Zertifikat, damit der Traffic zwischen CloudFlare und Azure auch verschlüsselt ist. Natürlich könnte ich jetzt ein LetsEncrypt Zertifikat beantragen und über `TXT` Einträge bestätigen, dass ich Eigentümmer der Domain bin. Allerdings währe das Overkill. Cloudflare bietet sogenannte `Origin Server` Zertifikate an. Dabei handel es sich um Zertifikate, welche nur zwischen Cloudflare und Azure gültig sind. Diese werden für alle anderen PCs als nicht vertrauenswürdig angezeigt. Der Voreil besteht darin, dass im Falle eines leakes des Zertifikates dieses ohne Probleme ausgetauscht werden kann und das ohne dass ein Valdes Zertifikat im Umlauf ist. 
+
+![image](https://user-images.githubusercontent.com/99135388/197341902-fa4fc09f-46e5-4da9-bee6-98f02d0cf7fb.png)
+
+
+```bash
+openssl pkcs12 -export -out ./azure_cert.pfx -inkey ./cloudflare_cert.pem -in ./cloudflare_cert.crf -legacy
 ```
 
 
@@ -231,3 +241,4 @@ Nun da der Server nun läuft habe ich schnell noch eine Subdomain eingerichtet d
 
 8. Einrichten der Firewall. <br/>
 Da ich diesen Server bei Hetzner eingerichtet habe ich automatisch auch Zungang zu einer kostenlosen externen Firewall und muss nicht `ufw` benutzen. FÜr den Minecraft Server muss ich TCP Traffik auf dem Port `22` für `ssh` und dem port `25565` für den Minecraft Server zulassen
+![image](https://user-images.githubusercontent.com/99135388/197341759-93f6d9a4-2762-4061-b24a-64d83342a90b.png)
