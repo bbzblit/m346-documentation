@@ -197,9 +197,13 @@ Der Traffic von PC zu CloudFlare ist automatisch verschlüsselt. Allerdings brau
 ![image](https://user-images.githubusercontent.com/99135388/197341902-fa4fc09f-46e5-4da9-bee6-98f02d0cf7fb.png)
 
 
+Dieses Zertifikat musste ich anschlissend nur noch in ein PFX Certificat umwndeln und auf Azure hochladen. Das umwalden in ein pfx file kann man mithilfe von OpenSSL glüclicherweise ganz einfach anpassen. 
 ```bash
 openssl pkcs12 -export -out ./azure_cert.pfx -inkey ./cloudflare_cert.pem -in ./cloudflare_cert.crf -legacy
 ```
+Anfangs hat Azure mein `pfx` Zertifikat nicht erkannt. Ich dachte zuerst es läge daran, dass ich das Password falsch eingegeben habe. Nach einer kurzen Recherche ist mir dann alerdings aufgefallen, dass OpenSSL 3+ nichtmehr defaultmässig DES encryption benutzt. Um dies denoch anwenden zu könnten kann man die Flag `-legacy` mitgeben.
+
+
 
 
 
