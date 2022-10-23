@@ -283,6 +283,9 @@ Im nächsten Schritt habe ich mich daran gemacht FizzBuzz in allen Programierspr
 <br/>
 Grösere Probleme sind mir bei der Aufgabe nicht begegenet. Je nach Programiersprache hat sich immer mal wieder einen tippfehler eingeschlichen, denn ich aber fürher oder später behoben habe. Ein kleineres Problem ist bei Java aufgetreten. Java ist die einzige Programiersprache, die ich lokal programmieren musste, da der Webeditor bei Azure sie nicht supportet hat. Dadurch musste ich zuerst lokal ein Projekt erstellen und dieses anschlissend auf Azure puschen. Das Erstellen und Pushen des Projektes verlief auch ohne Schwirigkeiten. Nach dem Deployen ist allerdings meine Funktionen beim Aufrufen immer in ein Timeout gelaufen. Zuerst hat das ganze für mich gar keinen Sinn gegeben, da Local alles funktioniert hat. Allso musste ich herausfinden, was sich geändert hat. Nach einer kuzen Vergleich ist mir aufgefallen, dass ich beim Projekt die Falsche JavaVersion angegeben habe. Nachdem ich dies behoben habe hat alles wieder normal funktioniert. Bei JavaScript habe ich mir zudem noch einen kleinen Spass erlaubt und das ganze in JSFuck implementiert (natürlich durch ein encoder). 
 
+### Bonus
+Als kleiner Bonus habe ich das ganze noch mit PowerShell implementiert. Mein erster Gedanke war, dass es extrem nervig sein wird das ganze mit Powershell zu implementieren. Nachdem ich mir allerdings ein paar beispiele angeschaut habe ist mir aufgefallen, dass es vom Syntax her gar nicht so speziell ist (nicht so wie bash). Mit der Hilfe von Stackoverflow ist mir dann das ganze Umschreiben auch relativ einfach gefallen.
+
 
 ## Python
 ```python
