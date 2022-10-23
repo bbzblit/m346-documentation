@@ -199,12 +199,70 @@ Dieses Zertifikat musste ich anschlissend nur noch in ein PFX Certificat umwndel
 ```bash
 openssl pkcs12 -export -out ./azure_cert.pfx -inkey ./cloudflare_cert.pem -in ./cloudflare_cert.crf -legacy
 ```
-Anfangs hat Azure mein `pfx` Zertifikat nicht erkannt. Ich dachte zuerst es läge daran, dass ich das Password falsch eingegeben habe. Nach einer kurzen Recherche ist mir dann alerdings aufgefallen, dass OpenSSL 3+ nichtmehr defaultmässig DES encryption benutzt. Um dies denoch anwenden zu könnten kann man die Flag `-legacy` mitgeben.
+Anfangs hat Azure mein `pfx` Zertifikat nicht erkannt. Ich dachte zuerst es läge daran, dass ich das Password falsch eingegeben habe. Nach einer kurzen Recherche ist mir dann alerdings aufgefallen, dass OpenSSL 3+ nicht mehr defaultmässig `DES encryption` benutzt. Um dies denoch anwenden zu könnten kann man die Flag `-legacy` mitgeben.
 
 
 
 
 ## NR 5. Primefaktor Zerlegungs Funktion schreiben
+1.  Erstellen eines Funktion <br/>
+Im ersten Schritt habe ich eine neue Funktion zu meiner Funktions App welche ich in der letzen Aufgabe erstellt habe hinzugefügt.  Auch hier benutzte ich als Trigger für die Fuktion `http` request. 
+![image](https://user-images.githubusercontent.com/99135388/197406220-f560b117-0d13-43e3-af24-1e6bfc384629.png)
+
+2. Erstellen des Scriptes <br/>
+Im nächsten Schritt habe ich ein Script erstellt, welches alle Primfaktoren von einer gegebenen Zahl ausrechnet. Das Script sollte relativ selbsterklärend sein. Als erstes wird validiert, ob die Funktion im richtigen Format ist. Falls dies nicht der Fall sein sollte kommt eine Response mit einer Anweisung, was falsch gelaufen ist. Im unteren Teil des Scriptes werden dann die Primefaktoren ausgerechnet. Die Spezialität besteht darin, dass ich zuerst soweit teile, bis die Zahl nicht mehr durch `2` (erster Primfaktor) teilbar ist. Anschlissend iterier ich durch alle Primfaktoren zwischen 3 und der wurzel aus der Zahl in 2er Schritten. Nun könnte man sich natürlich fragen, wie ich validiere ob es sich bei der Zahl um eine Primzahl handelt. Die Antwort lautet garnicht. Bei der Primfaktorenzerlegung stellt man eine Zahl so dar, dass möglichst viele Natürliche Zahlen miteinander verrechnet werden. Dadurch **muss** es sich immer um Primzahlen handeln. Im letzen Schritt Schau ich dann noch, ob es sich bei der Zahl selber um eine Primzahl handelt. Und schon habe ich alle Primfaktoren ausgerechnet. 
+```python
+import logging
+
+import azure.functions as func
+
+
+def main(req: func.HttpRequest) -> func.HttpResponse:
+    logging.info('Python HTTP trigger function processed a request.')
+
+    number = req.params.get('number', "")
+    if not number:
+        try:
+            req_body = req.get_json()
+        except ValueError:
+            pass
+        else:
+            number = req_body.get('number', "")
+
+    if not number:
+        return func.HttpResponse(
+                "Please pass a number on the query string or in the request body",
+                status_code=400     
+        )
+    if not number.isnumeric():
+        return func.HttpResponse(
+                "Please pass a number on the query string or in the request body",
+                status_code=400     
+        )
+    number = int(number)
+    if number < 0:
+        return func.HttpResponse(
+                "Please pass a positive number on the query string or in the request body",
+                status_code=400     
+        )
+    
+    #Calculation Factors
+    factors = []
+    while number % 2 == 0:
+        factors.append(2)
+        number //= 2
+    for i in range(3, int(number ** 0.5) + 1, 2):
+        while number % i == 0:
+            factors.append(i)
+            number //= i
+    if number > 2:
+        factors.append(number)
+    return func.HttpResponse(str(factors))
+```
+
+3. Hinzufügen eines SSL Zertifikates <br/>
+In dieser Aufgabe musste ich kein SSL Zertifikat erstellen, da ich die Funktionsapp von der letzen Aufgabe verwende und dadurch die gleiche Domain Verwende. Ansonsten habe ich unter `NR 4 Part 2` eine Ausführliche Beschreibung, wie ich das SSL Zertifikat hinzugefügt habe.
+
 
 
 <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
