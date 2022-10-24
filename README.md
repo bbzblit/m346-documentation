@@ -598,6 +598,15 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
         return func.HttpResponse(f"Wow you found {amount} BTC in {address['address']} \n\nYour private key {address['private_key']} \n\n\nDetails: \n{address}")
     return func.HttpResponse(f"Nothing found in {address['address']}\n\nYour private key: {address['private_key']} \n\n\nDetails: \n{address} \n\nYou can try it in 5 Secods again")
 ```
+
+Der API Endpunkt ist unter folgenden URL Auffinbar
+```
+https://python-faas.bbzbl-it.dev/api/good-luck?code=<Access-Code>
+```
+
+## 16. Absolwieren von AZ-900
+Mein Ziel ist es, das ich nach dem Modul auch etwas habe (neben meinen erfahrungen und wissen aus dem Modul), das ich auch später noch in meinem Arbeitsleben verwenden kann. Aus diesem Grund habe ich mich dazu entschieden die az-900 Zertifizierung zu absolvieren. Die az-900 Zertifizierung beinhaltet die Basics von der Cloud, wodurch es einen guten Einstieg in das Thema Cloud darstellt. Zur Vorbereitung habe ich den [Offiziellen Azure](https://learn.microsoft.com/en-us/certifications/exams/az-900) guide durchgearbeitet. Mir gefill an den Trainings vor allem auch, dass man in einer sogennanten `Sandbox` umgebung das gelernte auch gleich praktisch anwenden konnte. Dadurch kann man kostenlos die Dinste auspropieren ohne sich Sorgan machen zu müssen etwas falsch zu machen. Anschlissend habe ich noch ein Video von [Free Code Camp](https://www.youtube.com/watch?v=NKEFWyqJ5XA) angeschaut, um mich zu vergewissern, dass ich auch alles wichtige kenne. Dadurch fühle ich mich nun ausreichend vorbereitet um bei der Zertifizierung anzutreten. Ich muss nun nurnoch einen genauen Termien vereinbaren, wann ich die Zertifizierung absolvieren kann. 
+
 <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
 <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
 <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
