@@ -473,7 +473,7 @@ public class Function {
 
 ```
 
-Die Funktionen sind nun unter diesen URLs auffindbar
+Die Funktionen sind nun unter diesen URLs auffindbar. Bei allen Endpunkten muss man mit dem `code` parameter einen accesscode mitgeben, um überhaupt die Funktion benutzen zu können.
 ```
 python-faas.bbzbl-it.dev/api/fizzbuzz?code=<AccessCode>&number=<Your Number>
 
@@ -483,6 +483,14 @@ js-faas.bbzbl-it.dev/api/fizzbuzz?code=<AccessCode>&number=<Your Number>
 
 python-faas.bbzbl-it.dev/api/fizzbuzz?code=<AccessCode>&number=<Your Number>
 ```
+
+## 8. Eine API Aufrufen aus einer Azure funktion
+Ich habe mir lange Zeit überlegt, welche API ich aus einer Azure funktion heraus aufrufen könnte. Ich wollte nicht so lösen, dass ich einfach eine Simple api habe die irgendwelche Daten, welche ich dann fast 1 zu 1 an den Benutzer der API sende. Als ich meine alten Projekte durchgegangen bin ist mir eine Idee gekommen. Für ein früheres Projekt (M293) habe ich bereits einmal ein Tool mit JS geschrieben, mit dem man Bitcoin addressen generieren kann. Dabei habe ich gelernt, dass addressen, welche generiert wurden in der Theorie auch nocheinmal generiert werden könnten. Die warscheindlichkeit dafür beträgt allerdings nur etwas weniger als `106000000 zu 2^160 oder 1.461501637×10^48`. Das klingt zwar erstmal extrem unwarscheindlich (was es auch ist). Wenn man es allerdings mit der Warscheindlichkeit vergleicht,  das ein normales 52 Kartenspiel in einer bestimmten Reienfolge gemischt wird ist es viel warscheindlicher (`52!` oder `8.065817517×10^67`).
+
+1. Erstellen einer Azure Funktion <br/>
+Im ersten Schritt erstelle ich eine neue Azure funktion wie ich es auch schon mehrmals in den letzen beiden Aufgaben Dokumentiert habe. Ich habe mich dazu entschieden in diesem Beispiel wieder Python einzusetzen. Klar hätte ich auch mein JavaScript Projekt aus dem letzen Modul etwas abändern könnten und einfach in die Cloud stellen. Das währe aber relativ langweilig gewesen.
+
+2. Erstellen eines Scriptes <br/>
 
 
 <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
