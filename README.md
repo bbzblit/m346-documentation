@@ -473,6 +473,17 @@ public class Function {
 
 ```
 
+Die Funktionen sind nun unter diesen URLs auffindbar
+```
+python-faas.bbzbl-it.dev/api/fizzbuzz?code=<AccessCode>&number=<Your Number>
+
+java-faas.bbzbl-it.dev/api/fizzbuzz?code=<AccessCode>&number=<Your Number>
+
+js-faas.bbzbl-it.dev/api/fizzbuzz?code=<AccessCode>&number=<Your Number>
+
+python-faas.bbzbl-it.dev/api/fizzbuzz?code=<AccessCode>&number=<Your Number>
+```
+
 
 <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
 <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
