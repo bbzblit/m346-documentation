@@ -491,8 +491,113 @@ Ich habe mir lange Zeit überlegt, welche API ich aus einer Azure funktion herau
 Im ersten Schritt erstelle ich eine neue Azure funktion wie ich es auch schon mehrmals in den letzen beiden Aufgaben Dokumentiert habe. Ich habe mich dazu entschieden in diesem Beispiel wieder Python einzusetzen. Klar hätte ich auch mein JavaScript Projekt aus dem letzen Modul etwas abändern könnten und einfach in die Cloud stellen. Das währe aber relativ langweilig gewesen.
 
 2. Erstellen eines Scriptes <br/>
+Im nächsten Schritt habe ich das Script erstellt. Dieses Script ist relativ komplex. Aus diesem Grund werde ich nur auf den Teil eingehen, in dem ich checke, ob eine generierte Bitcoin Addresse bereits Bitcoins auf ihr hat. Mit der Funktion `getAmount(address)` lese ich die Amount an Bitcoins aus. Dabei verwende ich die API von `blockchain.info`. Der Vorteil ist, dass sie 100% Kostenlos ist und man sich nicht zu regisitrieren braucht. Der Nachteil ist, dass man nicht zu viele requests stellen darf, da man sonst für ein paar Minunten ein Timeout bekommt. Die genaue amout an Satoshis (100000000 Satoshis = 1 BTC) bekomme ich über den endpukt `https://blockchain.info/q/addressbalance/<addresse>`. Anschlissend reche ich das ganze noch in Bitcoins um und schon kann ich sagen, wie viel Bitcoins die addresse besitzt.
 
 
+```python
+import logging
+
+import azure.functions as func
+
+import hashlib
+import random
+import http.client
+
+A = 0
+B = 7
+P = 2**256 - 2**32 - 2**9 - 2**8 - 2**7 - 2**6 - 2**4 - 1
+GX = 55066263022277343669578718895168534326250603453777594175500187360389116729240
+GY = 32670510020758816978083085130507043184471273380659243275938904335757337482424
+G = (GX, GY)
+
+def getAmount(address : str) -> float:
+    """
+    Return the amount of bicoin in of the address using blockchain.com api
+    using http client
+    """
+    url = "https://blockchain.info/q/addressbalance/" + address
+    conn = http.client.HTTPSConnection("blockchain.info")
+    conn.request("GET", "/q/addressbalance/" + address)
+    res = conn.getresponse()
+    data = res.read()
+    return float(data.decode("utf-8"))/100000000
+
+def point_add(p1 : tuple, p2 : tuple) -> tuple:
+    if p1 != p2:
+        lam = (p1[1] - p2[1]) * pow(p1[0] - p2[0], P-2, P)
+        x3 = (pow(lam, 2) - p1[0] - p2[0]) % P
+        y3 = (lam * (p1[0] - x3) - p1[1])  % P
+        return (x3, y3)
+    return point_dubl(p1)
+
+def point_dubl(p1 : tuple) -> tuple:
+    lam = (3*p1[0]**2 + A) * pow(2*p1[1], P-2, P)
+    v = p1[1] - lam*p1[0] % P
+    x3 = (lam**2 - 2*p1[0]) % P
+    y3 = (lam*x3 + v) * -1 % P
+    return (x3, y3)
+
+
+def calc_publ(private_key):
+    publ = None
+    Q = G
+    binar = private_key
+    while binar:
+        if binar%2 == 1:
+            if publ == None:
+                publ = Q
+            else:
+                publ = point_add(publ, Q)
+        Q = point_dubl(Q)
+        binar = binar//2    
+    hex_value = hex(publ[0])[2:].upper()
+    if publ[1]%2 == 1:
+        return  "03" + hex_value
+    return "02" + hex_value
+
+def generateRandomKey():
+    return hashlib.sha256(str(random.getrandbits(256)).encode()  + str(random.randint(1, 1000000000000000000000000000)).encode())
+
+
+def public_key_to_address(public_key):
+    public_key = hashlib.new('ripemd160', hashlib.sha256(bytes.fromhex(public_key)).digest()).digest()
+    public_key = "00" + public_key.hex()
+    checksum = hashlib.sha256(hashlib.sha256(bytes.fromhex(public_key)).digest()).hexdigest()[:8]
+    public_key = public_key + checksum
+    return public_key
+
+def base58Check(value : str) -> str:
+    """
+    Convert a value to a base58Check string
+    """
+    value = int(value, 16)
+    alphabet = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz'
+    A = ""
+    while value > 0:
+        value, mod = divmod(value, 58)
+        A = alphabet[mod] + A
+    return A
+
+
+
+def newAddress():
+    priv = generateRandomKey()
+    publ = calc_publ(int(priv.hexdigest(), 16))
+    return {
+            "private_key" : priv.hexdigest(),
+            "public_key" : publ,
+            "address" : "1" + base58Check(public_key_to_address(publ))
+            }
+
+
+
+def main(req: func.HttpRequest) -> func.HttpResponse:
+    address = newAddress()
+    amount = getAmount(address["address"])
+    if amount > 0:
+        return func.HttpResponse(f"Wow you found {amount} BTC in {address['address']} \n\nYour private key {address['private_key']} \n\n\nDetails: \n{address}")
+    return func.HttpResponse(f"Nothing found in {address['address']}\n\nYour private key: {address['private_key']} \n\n\nDetails: \n{address} \n\nYou can try it in 5 Secods again")
+```
 <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
 <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
 <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
