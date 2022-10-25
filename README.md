@@ -10,17 +10,19 @@ Alls erstes musste ich meine GitHub Page aktivieren. Dass geht ganz einfach unte
 ![image](https://user-images.githubusercontent.com/99135388/197852634-87a6298a-f683-408e-82f4-7163c88fda82.png)
 
 2. Hinzufügen einer Subdomain <br/>
-Nach dem Aktivieren von GithubPages sollte das Projekt bereits erreichbar sein. Allerdings ist es relativ langweilig eine Subdomain von Github zu verwenden. Eine eigene Subdomain kann ich ganz einfach unter der gleichen Setting seite hinzufügen, wo ich zuvor auch meinen page akktiviert habe. Nach dem Hinzufügen brauche ich nurnoch einen DNS Eintrag einrichten der auf die alte Subdomain von Github zeigt und fertig ist meine GitHub Page. Es kann sein, dass die Domain anfangs noch nicht erreichbar ist, da Github noch nicht validieren konnte, dass ich der Eigentümmer der Domain sein. Nach spätestens einer halben Stunde (Bei cloudflare dns sonst auch gerne mal 24h) sollte sie aber schon erreichbar sein.
+Nach dem Aktivieren von GithubPages sollte das Projekt bereits erreichbar sein. Allerdings ist es relativ langweilig eine Subdomain von Github zu verwenden. Eine eigene Subdomain kann ich ganz einfach unter der gleichen Setting seite hinzufügen, wo ich zuvor auch meinen page akktiviert habe. Nach dem Hinzufügen brauche ich nurnoch einen DNS Eintrag einrichten der auf die alte Subdomain von Github zeigt und fertig ist meine GitHub Page. Es kann sein, dass die Domain anfangs noch nicht erreichbar ist, da Github noch nicht validieren konnte, dass ich der Eigentümmer der Domain sein. Nach spätestens einer halben Stunde (Bei cloudflare Dns sonst auch gerne mal 24h) sollte sie aber schon erreichbar sein.
 
 ```
 m346.bbzbl-it.dev -> github.com
 ```
 
 3. Aändern des Themes <br/>
-Da meine Page aus Markdown generiert wird kann ich auch bedingt mitbestimmen, wie es designt werden sollte (z.B. Hintergrundfarbe usw). Ich bevorzuge `cayman-dark` Theme, welches ich auch für meine anderen Dokumentation verwende. Um dieses hinzuzufügen und zu aktivieren füge ich folgende Zeile code in meinem `_config` file auf GitHUb hinzu.
+Da meine Page aus Markdown generiert wird kann ich auch bedingt mitbestimmen, wie es designt werden sollte (z.B. Hintergrundfarbe usw). Ich bevorzuge `cayman-dark` Theme, welches ich auch für meine anderen Dokumentation verwende. Um dieses hinzuzufügen und zu aktivieren füge ich folgende Zeile code in meinem `_config.yml` file auf GitHUb hinzu.
 
 ```
 remote_theme: lewismiddleton/cayman-dark
+description: Made by <a href="https://github.com/Yanni8">Yanni8</a>
+title: Modul-346-Leistungsberuteilung
 ```
 
 
