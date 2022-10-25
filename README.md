@@ -2,14 +2,20 @@
 ## Meine Ziele
 Mein Ziel ist es, dass ich alle "Projekte" alle Kompetenzen mit ausnahme von `Nr. 16 Microsoft Certified: Azure Fundamental (AZ-900) absolvieren` erledige. Ich möchte mich damit persönlich im bereich der Cloud weiterbilden. Ich denke, dass ich die ersten Aufgaben durch mein Vorissen schon relativ einfach erledigen kann. ALlerdings habe ich bis jetzt noch keine Erfahrung im Bereich von Serverless Funktionen usw.
 
-## Planung
-Bis zum Ende des Modules habe ich noch etwa 6 Wochen Zeit. Ich sollte dahher genügend Zeit haben um problemlos alle Services aufzubauen und zu Documentieren. Ein etwas anderes Problem stellen noch die Kosten dar. Ich habe von GitHub education aus `100 CHF` Azure und weitere `100 CHF` digitalCloud guthaben. Bei gewissen Projekten werde ich auch noch auf meinen Provider, den ich sonnst immer Verwende (Hetzner) switchen. Bei gewissen Augaben muss man auch eine App bei einem der anderen beiden grossen Cloud anbieter `AWS` und `GCP` erstellen. Diese werde ich gegen Ende machen, um grössere Kosten zu vermeiden. 
-
-
 ## NR 1 Eine statische Webseite erstellen und mit PaaS in der Cloud publizieren.
+Ich wollte dafür nicht meine Website aus dem letzen Modul deployen, da ich das bereits in einer anderen Task erledige (NR 3). Aus diesem Grund habe ich mich dafür entschieden einfach diese Dokumentation als IaaS auf GitHub zu deployen. Auch wenn das vielleicht nich ganz dem Ziel entschpricht spielt es keine Rolle, da ich auch ohne diese Aufgabe bereits mehr als genügend gelöst haben sollte.
 
-### Erstellen der Statischen Website.
-Als statische Website verwende ich meine Website aus dem letzen Modul M290. Diese braucht einen Webserver mit `PHP` und eine SQL datenbank. Ich verwende zum Deployen den [Webhostingservice](https://www.hetzner.com/webhosting) von `Hetzner` da ich in dem Basicpaket für `1.90` nichtnur einen Webserver mit PHP zur Verfügung habe sondern dazu auch gleich noch eine MySQL Datenbank, eine Domain bei der ich frei über die DNS EInträge verfügen kann, und einen E-Mail Server. Auch brauch ich mir keine Sorgen über Folgekosten zu machen, da sowohl der Netzwerktransfer wie aber auch Schreib und Leservorgäng in der MySQL Datenbank inbegriffen sind. 
+1. Erstellen einer GitHub Page <br/>
+Alls erstes musste ich meine GitHub Page aktivieren. Dass geht ganz einfach unter `Settings` > `Pages`. Als Branch habe ich den Main Branch und den Root folder ausgewählt.  
+![image](https://user-images.githubusercontent.com/99135388/197852634-87a6298a-f683-408e-82f4-7163c88fda82.png)
+
+2. Hinzufügen einer Subdomain <br/>
+Nach dem Aktivieren von GithubPages sollte das Projekt bereits erreichbar sein. Allerdings ist es relativ langweilig eine Subdomain von Github zu verwenden. Eine eigene Subdomain kann ich ganz einfach unter der gleichen Setting seite hinzufügen, wo ich zuvor auch meinen page akktiviert habe. Nach dem Hinzufügen brauche ich nurnoch einen DNS Eintrag einrichten der auf die alte Subdomain von Github zeigt und fertig ist meine GitHub Page. Es kann sein, dass die Domain anfangs noch nicht erreichbar ist, da Github noch nicht validieren konnte, dass ich der Eigentümmer der Domain sein. Nach spätestens einer halben Stunde (Bei cloudflare dns sonst auch gerne mal 24h) sollte sie aber schon erreichbar sein.
+
+```
+m346.bbzbl-it.dev -> github.com
+```
+
 
 ## Nr. 2 Einbinden eines Networkdrives
 Ich benutze für die Aufgabe einen bereits existierenden Server, auf dem ich aktuell meine Backups von den Server speichere. Ich werde das Filesystem auf meinem lokalen PC mounten. Das aktuelle Betriebsystem von meinem PC ist `Ubuntu 22.04.1 LTS`.
