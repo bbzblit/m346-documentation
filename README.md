@@ -264,6 +264,8 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
 In dieser Aufgabe musste ich kein SSL Zertifikat erstellen, da ich die Funktionsapp von der letzen Aufgabe verwende und dadurch die gleiche Domain Verwende. Ansonsten habe ich unter `NR 4 Part 2` eine Ausführliche Beschreibung, wie ich das SSL Zertifikat hinzugefügt habe.
 <br/>
 Das Fertige Produkt ist unter Folgenden URL Erreichbar:
+
+
 ```
 https://python-faas.bbzbl-it.dev/api/primefactor?code=<Access-Code>&number=<Number>
 ```
