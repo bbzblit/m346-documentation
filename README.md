@@ -1,23 +1,24 @@
-# M346-leistungsbeurteilung
 ## Meine Ziele
-Mein Ziel ist es, dass ich mehrere Projekte löse, um dadurch mich selber im Thema Cloud weiterzubilden. Ich habe schon vorerfahrungen mit dem Linux Betriebsystem (Da ich Linuxuser bin) und habe auch einige Server, welche ich betreue. Bei Themenen wie Serverless Functions kenne ich mich nochnicht so gut aus un möchte mich gerne in diesem Bereich weiterbilden. Eine Aufgabe, welche ich sicher lösen werde ist `AZ-900` absolvieren. Ich denke, dass es eine gute Möglichkeit ist, dass man nach dem Modul etwas hat, dass man auch in den Händen halten kann, und was einem im späteren Arbeitsleben auch unterstüzen kann. Ich werde allerdings im Modul mich nur auf die Zertifizierung vorbereiten, um diese dann nach dem Modul in aller Ruhe zu absolvieren.
+Mein Ziel ist es, dass ich mehrere Projekte löse, um dadurch mich selber im Thema Cloud weiterzubilden. Ich habe schon Vorerfahrungen mit dem Linux Betriebsystem (da ich Linuxuser bin) und habe auch einige Server, welche ich betreue. Bei Themen wie Serverless Functions, kenne ich mich noch nicht so gut aus und möchte mich gerne in diesem Bereich weiterbilden. Eine Aufgabe, welche ich sicher lösen werde ist `AZ-900` absolvieren. Ich denke, dass es eine gute Möglichkeit ist, dass man nach dem Modul etwas hat, das man auch in den Händen halten kann, und was einem im späteren Arbeitsleben auch unterstüzen kann. Ich werde allerdings im Modul mich nur auf die Zertifizierung vorbereiten, um diese dann nach dem Modul in aller Ruhe zu absolvieren.
 
 ## NR 1 Eine statische Webseite erstellen und mit PaaS in der Cloud publizieren.
-Ich wollte dafür nicht meine Website aus dem letzen Modul deployen, da ich das bereits in einer anderen Task erledige (NR 3). Aus diesem Grund habe ich mich dafür entschieden einfach diese Dokumentation als IaaS auf GitHub zu deployen. Auch wenn das vielleicht nich ganz dem Ziel entschpricht spielt es keine Rolle, da ich auch ohne diese Aufgabe bereits mehr als genügend gelöst haben sollte.
+Ich wollte dafür nicht meine Website aus dem letzen Modul deployen, da ich das bereits in einem anderen Task erledige (NR 3). Aus diesem Grund habe ich mich dafür entschieden, einfach diese Dokumentation als IaaS auf GitHub zu deployen. Auch wenn das vielleicht nicht ganz dem Ziel entspricht, spielt es keine Rolle, da ich auch ohne diese Aufgabe bereits mehr als genügend gelöst haben sollte.
 
 1. Erstellen einer GitHub Page <br/>
-Alls erstes musste ich meine GitHub Page aktivieren. Dass geht ganz einfach unter `Settings` > `Pages`. Als Branch habe ich den Main Branch und den Root folder ausgewählt.  
+Als erstes musste ich meine GitHub Page aktivieren. Dass geht ganz einfach unter `Settings` > `Pages`. Als Branch habe ich den Main Branch und den Root Folder ausgewählt.  
 ![image](https://user-images.githubusercontent.com/99135388/197852634-87a6298a-f683-408e-82f4-7163c88fda82.png)
 
 2. Hinzufügen einer Subdomain <br/>
-Nach dem Aktivieren von GithubPages sollte das Projekt bereits erreichbar sein. Allerdings ist es relativ langweilig eine Subdomain von Github zu verwenden. Eine eigene Subdomain kann ich ganz einfach unter der gleichen Setting seite hinzufügen, wo ich zuvor auch meinen page akktiviert habe. Nach dem Hinzufügen brauche ich nurnoch einen DNS Eintrag einrichten der auf die alte Subdomain von Github zeigt und fertig ist meine GitHub Page. Es kann sein, dass die Domain anfangs noch nicht erreichbar ist, da Github noch nicht validieren konnte, dass ich der Eigentümmer der Domain sein. Nach spätestens einer halben Stunde (Bei cloudflare Dns sonst auch gerne mal 24h) sollte sie aber schon erreichbar sein.
+Nach dem Aktivieren von GithubPages sollte das Projekt bereits erreichbar sein. Allerdings ist es relativ langweilig, eine Subdomain von Github zu verwenden. Eine eigene Subdomain kann ich ganz einfach unter der gleichen Settingseite hinzufügen, wo ich zuvor auch meine GithubPage aktiviert habe.
+
+Nach dem Hinzufügen brauche ich nur noch einen DNS Eintrag einzurichten, der auf die alte Subdomain von Github zeigt und fertig ist meine GitHub Page. Es kann sein, dass die Domain anfangs noch nicht erreichbar ist, da Github noch nicht validieren konnte, dass ich der Eigentümmer der Domain bin. Nach spätestens einer halben Stunde (Bei Cloudflare Dns sonst auch gerne einmal 24h) sollte sie aber schon erreichbar sein.
 
 ```
 m346.bbzbl-it.dev -> github.com
 ```
 
-3. Aändern des Themes <br/>
-Da meine Page aus Markdown generiert wird kann ich auch bedingt mitbestimmen, wie es designt werden sollte (z.B. Hintergrundfarbe usw). Ich bevorzuge `cayman-dark` Theme, welches ich auch für meine anderen Dokumentation verwende. Um dieses hinzuzufügen und zu aktivieren füge ich folgende Zeile code in meinem `_config.yml` file auf GitHUb hinzu.
+3. Abändern des Theme <br/>
+Da meine Page aus Markdown generiert wird, kann ich auch bedingt mitbestimmen, wie es designt werden sollte (z.B. Hintergrundfarbe usw). Ich bevorzuge `cayman-dark` Theme, welches ich auch für meine anderen Dokumentationen verwende. Um dieses hinzuzufügen und zu aktivieren, füge ich folgende Zeile Code in meinem `_config.yml` file auf GitHUb hinzu.
 
 ```
 remote_theme: lewismiddleton/cayman-dark
@@ -621,18 +622,17 @@ Der API Endpunkt ist unter folgenden URL Auffinbar
 ```
 https://python-faas.bbzbl-it.dev/api/good-luck?code=<Access-Code>
 ```
-
-## 16. Absolwieren von AZ-900
-Mein Ziel ist es, dass ich nach dem Modul auch etwas habe (neben meinen Erfahrungen und Wissen aus dem Modul), das ich auch später noch in meinem Arbeitsleben verwenden kann. Aus diesem Grund habe ich mich dazu entschieden die az-900 Zertifizierung zu absolvieren. Die az-900 Zertifizierung beinhaltet die Basics von der Cloud, wodurch es einen guten Einstieg in das Thema Cloud darstellt. Zur Vorbereitung habe ich den [Offiziellen Azure](https://learn.microsoft.com/en-us/certifications/exams/az-900) Guide durchgearbeitet. Mir gefiel an den Trainings vor allem auch, dass man in einer sogennanten `Sandbox` Umgebung das Gelernte auch gleich praktisch anwenden konnte. Dadurch kann man kostenlos die Dienste auspropieren ohne sich Sorgen machen zu müssen, etwas falsch zu machen. Anschliessend habe ich noch ein Video von [Free Code Camp](https://www.youtube.com/watch?v=NKEFWyqJ5XA) angeschaut, um mich zu vergewissern, dass ich auch alles Wichtige kenne. Dadurch fühle ich mich nun ausreichend vorbereitet, um bei der Zertifizierung anzutreten. Ich muss nun nur noch einen  Termin vereinbaren, wann ich die Zertifizierung absolvieren kann. 
-
+## 16. Absolvieren von AZ-900
+Mein Ziel ist es, dass ich nach dem Modul auch etwas habe (neben meinen Erfahrungen und Wissen aus dem Modul), das ich auch später noch in meinem Arbeitsleben verwenden kann. Aus diesem Grund habe ich mich dazu entschieden, die az-900 Zertifizierung zu absolvieren. Die az-900 Zertifizierung beinhaltet die Basics von der Cloud, wodurch es einen guten Einstieg in das Thema Cloud darstellt. Zur Vorbereitung habe ich den [Offiziellen Azure](https://learn.microsoft.com/en-us/certifications/exams/az-900) Guide durchgearbeitet. Mir gefiel an den Trainings vor allem auch, dass man in einer sogennanten `Sandbox` Umgebung das Gelernte auch gleich praktisch anwenden konnte. Dadurch kann man kostenlos die Dienste auspropieren ohne sich Sorgen machen zu müssen, etwas falsch zu machen. Anschliessend habe ich noch ein Video von [Free Code Camp](https://www.youtube.com/watch?v=NKEFWyqJ5XA) angeschaut, um mich zu vergewissern, dass ich auch alles Wichtige kenne. Dadurch fühle ich mich nun ausreichend vorbereitet, um bei der Zertifizierung anzutreten. Ich muss nun nur noch einen  Termin vereinbaren, wann ich die Zertifizierung absolvieren kann. 
 
 
-## 20 Automatische Uniti Tests
-Automatisierte Unit Tests sollen sicherstellen, dass sich keine Bugs in eine Funktion einschleichen können. Bisher habe ich alle Tests immer händisch vorgenommen. Das heisst, dass ich nachdem ich eine Änderung an der Funktion gemacht habe, die Funktion immer mit allen Evantualitäten ausgetestet habe. Für kleinere Projekte wie meine Funktions Apps ist das kein Problem. Allerdings je grösser die App wird desto nerfiger und afwändiger ist es immer wieder alles durchzutesten. Aus diesem Grund gibt es automatisierte Tests. Dabei handelt es sich um vordefinierte Methoden, die automatisiert api calls lossenden und dann auch das ergebnis validieren. Jeder Test läst sich normalerweise in 3 Teile einteilen. Zuerst ist da einmal die Vorbereitung. In dieser Phase werden die ganzen Attribute erstelt, mit denen man den Test durchführt. Anschlissend führt man das ganze durch. Normalerweise in Form eines REST Api calles. Am Ende wird dann noch validiert, ob das Ergebnis auch mit dem erwartet übereinstimmt. <br/>
+
+## 20 Automatische Unit Tests
+Automatisierte Unit Tests sollen sicherstellen, dass sich keine Bugs in eine Funktion einschleichen können. Bisher habe ich alle Tests immer händisch vorgenommen. Das heisst, dass ich nachdem ich eine Änderung an der Funktion gemacht habe, die Funktion immer mit allen Eventualitäten ausgetestet habe. Für kleinere Projekte wie meine Funktions Apps ist das kein Problem. Allerdings je grösser die App wird, desto nerviger und aufwändiger ist es immer wieder, alles durchzutesten. Aus diesem Grund gibt es automatisierte Tests. Dabei handelt es sich um vordefinierte Methoden, die automatisiert api calls lossenden und dann auch das Ergebnis validieren. Jeder Test lässt sich normalerweise in 3 Teile einteilen. Zuerst ist da einmal die Vorbereitung. In dieser Phase werden die ganzen Attribute erstellt, mit denen man den Test durchführt. Anschliessend führt man das Ganze durch. Normalerweise in Form eines REST Api calles. Am Ende wird dann noch validiert, ob das Ergebnis auch mit dem erwarteten Ergebnis übereinstimmt. <br/>
 <br/>
-In meinem Fall habe ich das ganze anhand meiner FizzBuzz Funktion implementiert, welche ich in Java geschrieben habe. Diese habe ich noch von der Implementaton auf meinem PC Verfügbar. Dadurch konnte ich gleich die mitgenerierte JavaTestKlasse verwenden. Ein Testcase kann man inform einter Methode erstellen, welche mit `@test` annotiert ist. Durch die Annotation erkennt Azure, dass es sich dabei um einen Test handelt. Diese Tests werden immer vor dem Compilen ausgeführt. In meinem Fall habe ich 3 Testcases implementiert. 2 Davon sollen erfolgreich sein und der 3. soll auf einen Fehlercode prüfen.  Wie ich das ganze implementiert habe sollte relativ klar an den Commentaren im Code erkennbar sein.
+In meinem Fall habe ich das ganze anhand meiner FizzBuzz Funktion implementiert, welche ich in Java geschrieben habe. Diese habe ich noch von der Implementation auf meinem PC verfügbar. Dadurch konnte ich gleich die mitgenerierte JavaTestKlasse verwenden. Ein Testcase kann man in Form einer Methode erstellen, welche mit `@test` annotiert ist. Durch die Annotation erkennt Azure, dass es sich dabei um einen Test handelt. Diese Tests werden immer vor dem Compilen ausgeführt. In meinem Fall habe ich 3 Testcases implementiert. 2 davon sollen erfolgreich sein und der 3. soll eine Fehlersituation hervorrufen.  Wie ich das Ganze implementiert habe, sollte relativ klar an den Kommentaren im Code erkennbar sein.
 <br/><br/>
-Jetzt wo ich die Uniti Tests habe wird jedes mal befor ich meinen Code Compiled wird die ganzen Tests einmal ausgeführt. Bei einem Fehler in einem der Tests wird das Compilen sofort abgebrochen. Wenn ich meine Tests nun richtig geschriebe habe sollte und alle Fälle abgedekt habe sollte es nun nurnoch schwirig möglich sein einen kleinen Fehler zu implementieren, ohne dass es auffält.
+Jetzt wo ich die Unit Tests habe, werden jedes Mal bevor ich meinen Code compile, die ganzen Tests einmal ausgeführt. Bei einem Fehler in einem der Tests, wird das Compilen sofort abgebrochen. Wenn ich meine Tests nun richtig geschriebe und alle Fälle abgedeckt habe, sollte es nun nur noch schwierig möglich sein, einen Fehler zu implementieren, ohne dass es auffällt.
 ```java
 package dev.bbzblit;
 
@@ -767,7 +767,9 @@ public class FunctionTest {
 ```
 
 ## 22 Bowlin Counter
-Ich hab mir diese Aufgabe ausgesucht, da ich sehr gerne Coderätzel löse. Ich musste zuerst einmal googlen, worum es sich bei der Aufgabe handelt. Ich hab schnell eine Aufgabenberschreibung gefunden. Mir ist schnell aufgefallen, dass dieses Rätzel relativ bekannt ist. Dadurch kam mir die Idee, dass ich es möglicherweise bereits einmal auf CodeWars gelöst haben könnte oder es zumindes verfügbar ist, [und so war es auch](https://www.codewars.com/kata/5531abe4855bcc8d1f00004c). Dadurch habe ich natürlich einen extrem guten Vorteil, da ich durch die Seite eine genaue Beschreibung von dem Problem bekomme. Ausserdem gibt es da automatische Testcases mit denen ich meine Lösung testen kann. Dadurch muss ich schon eine Aufgabe weniger bewältigen. Als ich mir die Aufgabe durchgelesen habe ist mir die Aufgabe relativ leicht vorgekommen (für ein 4er Katar). Nachdem ich eine erste Lösung habe, welche auch funktionert habe ich mich noch drangesetzt, um diese zu Optimieren, bis ich zufrieden dammit war.
+Ich hab mir diese Aufgabe ausgesucht, da ich sehr gerne Coderätsel löse. Ich musste zuerst einmal googlen, worum es sich bei der Aufgabe handelt. Ich hab schnell eine Aufgabenbeschreibung gefunden. Mir ist schnell aufgefallen, dass dieses Rätsel relativ bekannt ist. Dadurch kam mir die Idee, dass ich es möglicherweise bereits einmal auf CodeWars gelöst haben könnte oder es zumindes verfügbar ist, [und so war es auch](https://www.codewars.com/kata/5531abe4855bcc8d1f00004c). Dadurch habe ich natürlich einen extrem guten Vorteil, da ich durch die Seite eine genaue Beschreibung vom Problem bekomme. Ausserdem gibt es da automatische Testcases, mit denen ich meine Lösung testen kann. Dadurch muss ich schon eine Aufgabe weniger bewältigen. Als ich mir die Aufgabe durchgelesen habe, ist mir die Aufgabe relativ leicht vorgekommen (für ein 4er Katar). Nachdem ich eine erste Lösung habe, welche auch funktionert, habe ich mich noch drangesetzt, um diese zu optimieren, bis ich zufrieden dammit war.
+
+
 ```python
 translator = { "x" : 10, "/" : 10,  "1" : 1 , "2" : 2, "3": 3, "4" : 4, "5" : 5, "6" : 6, "7" : 7, "8" : 8, "9" : 9 }
 def bowling_score(frames : str) -> int:
@@ -792,13 +794,12 @@ def bowling_score(frames : str) -> int:
         round += {"x" : 1}.get(char , 0.5)
     return points
 ```
-Bei der Methode kann man nun als paramter `frames` eine String mit einer aneinanderreihung von Punktzahlen pro Runde geben (z.B `15 1/ x ...`). In der Methode wird nie validiert, ob die angegebenen Punkte korrekt sind. Allerdings ist das auch nicht Teil der Augabe. Anschlissend wird mithilfe eines while loopes den String in die totale Punktzahl umgerechnet.
+Bei der Methode kann man nun als Paramter `frames` eine String mit einer Aneinanderreihung von Punktzahlen pro Runde geben (z.B `15 1/ x ...`). In der Methode wird nie validiert, ob die angegebenen Punkte korrekt sind. Allerdings ist das auch nicht Teil der Aufgabe. Anschliessend wird mit Hilfe eines while loopes der String in die totale Punktzahl umgerechnet.
 <br/>
-Für das Deployment habe ich meine bestehende Python app verwendet, welche unter der URL `https://python-faas.bbzbl-it.dev` verfügbar ist.
+Für das Deployment habe ich meine bestehende Python App verwendet, welche unter der URL `https://python-faas.bbzbl-it.dev` verfügbar ist.
 ```
 https://python-faas.bbzbl-it.dev/api/bowling-dojo?code=<Acces-Code>&rounds=<RoundString>
 ```
-
 <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
 <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
 <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
