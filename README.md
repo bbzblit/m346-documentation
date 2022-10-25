@@ -747,6 +747,40 @@ public class FunctionTest {
 }
 
 ```
+
+## 22 Bowlin Counter
+Ich hab mir diese Aufgabe ausgesucht, da ich sehr gerne Coderätzel löse. Ich musste zuerst einmal googlen, worum es sich bei der Aufgabe handelt. Ich hab schnell eine Aufgabenberschreibung gefunden. Mir ist schnell aufgefallen, dass dieses Rätzel relativ bekannt ist. Dadurch kam mir die Idee, dass ich es möglicherweise bereits einmal auf CodeWars gelöst haben könnte oder es zumindes verfügbar ist, [und so war es auch](https://www.codewars.com/kata/5531abe4855bcc8d1f00004c). Dadurch habe ich natürlich einen extrem guten Vorteil, da ich durch die Seite eine genaue Beschreibung von dem Problem bekomme. Ausserdem gibt es da automatische Testcases mit denen ich meine Lösung testen kann. Dadurch muss ich schon eine Aufgabe weniger bewältigen. Als ich mir die Aufgabe durchgelesen habe ist mir die Aufgabe relativ leicht vorgekommen (für ein 4er Katar). Nachdem ich eine erste Lösung habe, welche auch funktionert habe ich mich noch drangesetzt, um diese zu Optimieren, bis ich zufrieden dammit war.
+```python
+translator = { "x" : 10, "/" : 10,  "1" : 1 , "2" : 2, "3": 3, "4" : 4, "5" : 5, "6" : 6, "7" : 7, "8" : 8, "9" : 9 }
+def bowling_score(frames : str) -> int:
+    last_char = ""
+    frames = frames.replace(" ", "").lower()
+    points = 0
+    round = 0
+    while round < 10:
+        char = frames[0]
+        frames = frames[1:]
+        points += translator.get(char, 0)
+        if char == "/":
+            points -= translator.get(last_char, 0)
+            points += translator.get(frames[0], 0)
+        elif char == "x":
+            if frames[1] != "/":
+                points += translator.get(frames[0], 0)
+                points += translator.get(frames[1], 0)
+            else:
+                points += 10
+        last_char = char
+        round += {"x" : 1}.get(char , 0.5)
+    return points
+```
+Bei der Methode kann man nun als paramter `frames` eine String mit einer aneinanderreihung von Punktzahlen pro Runde geben (z.B `15 1/ x ...`). In der Methode wird nie validiert, ob die angegebenen Punkte korrekt sind. Allerdings ist das auch nicht Teil der Augabe. Anschlissend wird mithilfe eines while loopes den String in die totale Punktzahl umgerechnet.
+<br/>
+Für das Deployment habe ich meine bestehende Python app verwendet, welche unter der URL `https://python-faas.bbzbl-it.dev` verfügbar ist.
+```
+https://python-faas.bbzbl-it.dev/api/bowling-dojo?code=<Acces-Code>&rounds=<RoundString>
+```
+
 <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
 <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
 <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
