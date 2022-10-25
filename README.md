@@ -607,6 +607,145 @@ https://python-faas.bbzbl-it.dev/api/good-luck?code=<Access-Code>
 ## 16. Absolwieren von AZ-900
 Mein Ziel ist es, dass ich nach dem Modul auch etwas habe (neben meinen Erfahrungen und Wissen aus dem Modul), das ich auch später noch in meinem Arbeitsleben verwenden kann. Aus diesem Grund habe ich mich dazu entschieden die az-900 Zertifizierung zu absolvieren. Die az-900 Zertifizierung beinhaltet die Basics von der Cloud, wodurch es einen guten Einstieg in das Thema Cloud darstellt. Zur Vorbereitung habe ich den [Offiziellen Azure](https://learn.microsoft.com/en-us/certifications/exams/az-900) Guide durchgearbeitet. Mir gefiel an den Trainings vor allem auch, dass man in einer sogennanten `Sandbox` Umgebung das Gelernte auch gleich praktisch anwenden konnte. Dadurch kann man kostenlos die Dienste auspropieren ohne sich Sorgen machen zu müssen, etwas falsch zu machen. Anschliessend habe ich noch ein Video von [Free Code Camp](https://www.youtube.com/watch?v=NKEFWyqJ5XA) angeschaut, um mich zu vergewissern, dass ich auch alles Wichtige kenne. Dadurch fühle ich mich nun ausreichend vorbereitet, um bei der Zertifizierung anzutreten. Ich muss nun nur noch einen  Termin vereinbaren, wann ich die Zertifizierung absolvieren kann. 
 
+
+
+## 20 Automatische Uniti Tests
+Automatisierte Unit Tests sollen sicherstellen, dass sich keine Bugs in eine Funktion einschleichen können. Bisher habe ich alle Tests immer händisch vorgenommen. Das heisst, dass ich nachdem ich eine Änderung an der Funktion gemacht habe, die Funktion immer mit allen Evantualitäten ausgetestet habe. Für kleinere Projekte wie meine Funktions Apps ist das kein Problem. Allerdings je grösser die App wird desto nerfiger und afwändiger ist es immer wieder alles durchzutesten. Aus diesem Grund gibt es automatisierte Tests. Dabei handelt es sich um vordefinierte Methoden, die automatisiert api calls lossenden und dann auch das ergebnis validieren. Jeder Test läst sich normalerweise in 3 Teile einteilen. Zuerst ist da einmal die Vorbereitung. In dieser Phase werden die ganzen Attribute erstelt, mit denen man den Test durchführt. Anschlissend führt man das ganze durch. Normalerweise in Form eines REST Api calles. Am Ende wird dann noch validiert, ob das Ergebnis auch mit dem erwartet übereinstimmt. <br/>
+<br/>
+In meinem Fall habe ich das ganze anhand meiner FizzBuzz Funktion implementiert, welche ich in Java geschrieben habe. Diese habe ich noch von der Implementaton auf meinem PC Verfügbar. Dadurch konnte ich gleich die mitgenerierte JavaTestKlasse verwenden. Ein Testcase kann man inform einter Methode erstellen, welche mit `@test` annotiert ist. Durch die Annotation erkennt Azure, dass es sich dabei um einen Test handelt. Diese Tests werden immer vor dem Compilen ausgeführt. In meinem Fall habe ich 3 Testcases implementiert. 2 Davon sollen erfolgreich sein und der 3. soll auf einen Fehlercode prüfen.  Wie ich das ganze implementiert habe sollte relativ klar an den Commentaren im Code erkennbar sein.
+
+```java
+package dev.bbzblit;
+
+import com.microsoft.azure.functions.*;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
+
+import java.util.*;
+import java.util.logging.Logger;
+
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
+
+
+/**
+ * Unit test for Function class.
+ */
+public class FunctionTest {
+    /**
+     *  Test if class is be able to work with query parameters
+     */
+    @Test
+    public void testHttpTriggerJava() throws Exception {
+        // Setup
+        final HttpRequestMessage<Optional<String>> req = mock(HttpRequestMessage.class);
+
+        final Map<String, String> queryParams = new HashMap<>();
+        queryParams.put("number", "15"); //<- Create a QueryParameter with number=15
+
+
+        doReturn(queryParams).when(req).getQueryParameters();//<- Says the Mock class to return the QueryParameter 
+                                                             //"queryParams" when getQueryParameters() is called in
+                                                             // the controller
+
+        final Optional<String> queryBody = Optional.empty(); //<- Same with query body but this time is it empty
+        doReturn(queryBody).when(req).getBody();
+
+        doAnswer(new Answer<HttpResponseMessage.Builder>() {
+            @Override
+            public HttpResponseMessage.Builder answer(InvocationOnMock invocation) {
+                HttpStatus status = (HttpStatus) invocation.getArguments()[0];
+                return new HttpResponseMessageMock.HttpResponseMessageBuilderMock().status(status);
+            }
+        }).when(req).createResponseBuilder(any(HttpStatus.class));
+
+
+        final ExecutionContext context = mock(ExecutionContext.class);
+        doReturn(Logger.getGlobal()).when(context).getLogger(); //<- Mocks the Logging Class
+                                                                //That logs of the controller are shown 
+                                                                //in the console
+
+        final HttpResponseMessage ret = new Function().fizzBuzz(req, context); //<- Invoke the function 
+                                                                               //called fizzBuzz
+
+        // Verify
+        assertEquals(ret.getStatus(), HttpStatus.OK);
+        assertEquals(ret.getBody(), "FizzBuzz");
+    }
+
+    /**
+     * Test if it also works with a Body parameter instead of a QueryParameter
+     */
+    @Test
+    public void testFizzBuzzWithBody() throws Exception {
+        // Setup
+        final HttpRequestMessage<Optional<String>> req = mock(HttpRequestMessage.class);
+
+        doReturn(new HashMap<>()).when(req).getQueryParameters();
+
+        final Optional<String> queryBody = new HashMap<String, String>() {{
+            put("number", "15");
+        }}.entrySet().stream().findFirst().map(Map.Entry::getValue);
+        doReturn(queryBody).when(req).getBody();
+
+        doAnswer(new Answer<HttpResponseMessage.Builder>() {
+            @Override
+            public HttpResponseMessage.Builder answer(InvocationOnMock invocation) {
+                HttpStatus status = (HttpStatus) invocation.getArguments()[0];
+                return new HttpResponseMessageMock.HttpResponseMessageBuilderMock().status(status);
+            }
+        }).when(req).createResponseBuilder(any(HttpStatus.class));
+
+
+        final ExecutionContext context = mock(ExecutionContext.class);
+        doReturn(Logger.getGlobal()).when(context).getLogger();
+
+        final HttpResponseMessage ret = new Function().fizzBuzz(req, context);
+
+        // Verify
+        assertEquals(ret.getStatus(), HttpStatus.OK);
+        assertEquals(ret.getBody(), "FizzBuzz");
+    }
+
+
+    /**
+     * Test if it returns a 422 Unprocessable Entity if the number is not in the format of an Integer
+     */
+    @Test
+    public void testWIthInvalideNumber() throws Exception {
+        // Setup
+        final HttpRequestMessage<Optional<String>> req = mock(HttpRequestMessage.class);
+
+        doReturn(new HashMap<>()).when(req).getQueryParameters();
+
+        final Optional<String> queryBody = new HashMap<String, String>() {{
+            put("number", "abc");
+        }}.entrySet().stream().findFirst().map(Map.Entry::getValue);
+        doReturn(queryBody).when(req).getBody();
+
+        doAnswer(new Answer<HttpResponseMessage.Builder>() {
+            @Override
+            public HttpResponseMessage.Builder answer(InvocationOnMock invocation) {
+                HttpStatus status = (HttpStatus) invocation.getArguments()[0];
+                return new HttpResponseMessageMock.HttpResponseMessageBuilderMock().status(status);
+            }
+        }).when(req).createResponseBuilder(any(HttpStatus.class));
+
+
+        final ExecutionContext context = mock(ExecutionContext.class);
+        doReturn(Logger.getGlobal()).when(context).getLogger();
+
+        final HttpResponseMessage ret = new Function().fizzBuzz(req, context);
+
+        // Verify
+        assertEquals(ret.getStatus(), HttpStatus.UNPROCESSABLE_ENTITY);
+        assertEquals(ret.getBody(), "Please pass a number on the query string or in the request body");
+    }
+}
+
+```
 <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
 <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
 <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
