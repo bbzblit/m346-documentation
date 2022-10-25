@@ -16,6 +16,14 @@ Nach dem Aktivieren von GithubPages sollte das Projekt bereits erreichbar sein. 
 m346.bbzbl-it.dev -> github.com
 ```
 
+3. Aändern des Themes <br/>
+Da meine Page aus Markdown generiert wird kann ich auch bedingt mitbestimmen, wie es designt werden sollte (z.B. Hintergrundfarbe usw). Ich bevorzuge `cayman-dark` Theme, welches ich auch für meine anderen Dokumentation verwende. Um dieses hinzuzufügen und zu aktivieren füge ich folgende Zeile code in meinem `_config` file auf GitHUb hinzu.
+
+```
+remote_theme: lewismiddleton/cayman-dark
+```
+
+
 
 ## Nr. 2 Einbinden eines Networkdrives
 Ich benutze für die Aufgabe einen bereits existierenden Server, auf dem ich aktuell meine Backups von den Server speichere. Ich werde das Filesystem auf meinem lokalen PC mounten. Das aktuelle Betriebsystem von meinem PC ist `Ubuntu 22.04.1 LTS`.
